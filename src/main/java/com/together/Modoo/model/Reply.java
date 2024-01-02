@@ -1,8 +1,13 @@
 package com.together.Modoo.model;
 
+import com.together.Modoo.dto.request.RequestReply;
+import com.together.Modoo.dto.response.ResponseReply;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +15,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Reply extends BaseTime {
     @Id
     @GeneratedValue
@@ -26,6 +34,20 @@ public class Reply extends BaseTime {
     @ManyToOne
     private Reply parent = this;
     private Integer level = 0;
+
+    public Reply(RequestReply requestReply) {
+        this.message = requestReply.getMessage();
+    }
+
+    public ResponseReply toDto() {
+        return ResponseReply.builder()
+                .id(id)
+                .message(message)
+                .board(board.toDto())
+                .user(user.toDto())
+                .level(level)
+                .build();
+    }
 
     public void update(Reply reply) {
     }
