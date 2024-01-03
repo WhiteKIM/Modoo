@@ -33,6 +33,15 @@ public class Project {
 
     public Project(RequestProject requestProject) {
         this.title = requestProject.getTitle();
+        this.skills = getSkills();
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public ResponseProject toDto() {
@@ -44,6 +53,6 @@ public class Project {
                 .build();
     }
 
-    public void update(Project project) {
+    public void update(RequestProject project) {
     }
 }

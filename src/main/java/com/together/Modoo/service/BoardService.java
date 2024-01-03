@@ -1,11 +1,14 @@
 package com.together.Modoo.service;
 
+import com.together.Modoo.dto.request.RequestBoard;
+import com.together.Modoo.dto.response.ResponseBoard;
 import com.together.Modoo.model.Board;
 import com.together.Modoo.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,16 +17,21 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public void save(Board board) {
-        boardRepository.save(board);
+    public List<ResponseBoard> getAll() {
+        return boardRepository.findAll().stream().map(Board::toDto).toList();
     }
 
-    public Board getBoard(Long id) {
-        return boardRepository.findById(id).orElseThrow(RuntimeException::new);
+    public void save(RequestBoard board) {
+        boardRepository.save(new Board(board));
     }
 
-    public void update(Board board) {
-        Optional<Board> boardOptional = boardRepository.findById(board.getId());
+    public ResponseBoard getBoard(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(RuntimeException::new);
+        return board.toDto();
+    }
+
+    public void update(Long id, RequestBoard board) {
+        Optional<Board> boardOptional = boardRepository.findById(id);
         if(boardOptional.isEmpty())
             throw new RuntimeException();
 

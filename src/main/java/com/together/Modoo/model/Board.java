@@ -41,6 +41,6 @@ public class Board extends BaseTime {
         return responseBoard;
     }
 
-    public void update(Board board) {
+    public void update(RequestBoard board) {
     }
 }

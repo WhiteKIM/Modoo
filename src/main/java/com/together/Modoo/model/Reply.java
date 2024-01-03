@@ -49,6 +49,14 @@ public class Reply extends BaseTime {
                 .build();
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setParent(Reply reply) {
+        this.parent = reply;
+    }
+
     public void update(Reply reply) {
     }
 }
