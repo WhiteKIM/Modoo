@@ -6,6 +6,8 @@ import com.together.Modoo.model.Member;
 import com.together.Modoo.model.Team;
 import com.together.Modoo.model.User;
 import com.together.Modoo.repository.MemberRepository;
+import com.together.Modoo.repository.TeamRepository;
+import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +20,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final TeamService teamService;
-    private final UserService userService;
+    private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
 
     public void save(RequestMember member) {
-        User registerUser = userService.getUser(member.getUserId());
-        Team registerTeam = teamService.getTeam(member.getTeamId());
+        User registerUser = userRepository.findById(member.getUserId()).orElseThrow();
+        Team registerTeam = teamRepository.findById(member.getTeamId()).orElseThrow();
         memberRepository.save(Member.builder().user(registerUser).team(registerTeam).build());
     }
 
@@ -45,7 +47,7 @@ public class MemberService {
     }
 
     public List<ResponseMember> findAllByTeamId(Long teamId) {
-        List<Member> teamMember = memberRepository.findAllByTeam(teamService.getTeam(teamId));
+        List<Member> teamMember = memberRepository.findAllByTeam(teamRepository.findById(teamId).orElseThrow());
         return teamMember.stream().map(Member::toDto).toList();
     }
 }

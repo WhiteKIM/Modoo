@@ -6,6 +6,7 @@ import com.together.Modoo.model.Category;
 import com.together.Modoo.model.Project;
 import com.together.Modoo.repository.CategoryRepository;
 import com.together.Modoo.repository.ProjectRepository;
+import com.together.Modoo.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +20,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
-    private final TeamService teamService;
+    private final TeamRepository teamRepository;
     private final CategoryRepository categoryRepository;
 
     public void save(RequestProject project) {
         Project createProject = new Project(project);
-        createProject.setTeam(teamService.getTeam(project.getTeamId()));
+        createProject.setTeam(teamRepository.findById(project.getTeamId()).orElseThrow());
         List<Category> categories = new ArrayList<>();
         for (Long categoryId : project.getCategoriesId()) {
             Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
@@ -52,7 +53,7 @@ public class ProjectService {
     }
 
     public List<ResponseProject> getAllTeamProject(Long teamId) {
-        List<Project> projectList = projectRepository.findAllByTeam(teamService.getTeam(teamId));
+        List<Project> projectList = projectRepository.findAllByTeam(teamRepository.findById(teamId).orElseThrow());
         return projectList.stream().map(Project::toDto).toList();
     }
 }

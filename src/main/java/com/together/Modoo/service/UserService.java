@@ -1,5 +1,7 @@
 package com.together.Modoo.service;
 
+import com.together.Modoo.dto.request.RequestUser;
+import com.together.Modoo.dto.response.ResponseUser;
 import com.together.Modoo.model.User;
 import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +16,13 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void save(User user) {
+    public void save(RequestUser requestUser) {
+        User user = new User(requestUser);
         userRepository.save(user);
     }
 
-    public User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+    public ResponseUser getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).toDto();
     }
 
     public void update(User user) {

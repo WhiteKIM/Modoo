@@ -43,6 +43,6 @@ public class Team {
                 .build();
     }
 
-    public void update(Team team) {
+    public void update(RequestTeam team) {
     }
 }

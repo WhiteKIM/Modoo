@@ -1,11 +1,19 @@
 package com.together.Modoo.service;
 
+import com.together.Modoo.dto.request.RequestTeam;
+import com.together.Modoo.dto.response.ResponseTeam;
+import com.together.Modoo.model.Member;
 import com.together.Modoo.model.Team;
+import com.together.Modoo.model.User;
+import com.together.Modoo.repository.MemberRepository;
 import com.together.Modoo.repository.TeamRepository;
+import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,25 +21,39 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TeamService {
     private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
-    public void save(Team team) {
+    public void save(RequestTeam requestTeam) {
+        Team team = new Team(requestTeam);
         teamRepository.save(team);
     }
 
-    public Team getTeam(Long id) {
-        return teamRepository.findById(id).orElseThrow(RuntimeException::new);
+    public ResponseTeam getTeam(Long id) {
+        return teamRepository.findById(id).orElseThrow(RuntimeException::new).toDto();
     }
 
-    public void update(Team team) {
-        Optional<Team> optionalTeam = teamRepository.findById(team.getId());
+    public void update(Long id, RequestTeam requestTeam) {
+        Optional<Team> optionalTeam = teamRepository.findById(id);
         if(optionalTeam.isEmpty())
             throw new RuntimeException();
 
         Team team1 = optionalTeam.get();
-        team1.update(team);
+        team1.update(requestTeam);
     }
 
     public void delete(Long id) {
         return;
+    }
+
+    public List<ResponseTeam> findTeamByUser(Long id) {
+        User targetUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        List<Team> teamList = new ArrayList<>();
+        for(Member member : targetUser.getMembers()) {
+            Optional<Team> team = teamRepository.findByMembersIn(member);
+            team.ifPresent(teamList::add);
+        }
+
+        return teamList.stream().map(Team::toDto).toList();
     }
 }
