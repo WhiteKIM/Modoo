@@ -35,7 +35,7 @@ public class TeamService {
 
     public void update(Long id, RequestTeam requestTeam) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
-        if(optionalTeam.isEmpty())
+        if (optionalTeam.isEmpty())
             throw new RuntimeException();
 
         Team team1 = optionalTeam.get();
@@ -49,9 +49,8 @@ public class TeamService {
     public List<ResponseTeam> findTeamByUser(Long id) {
         User targetUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
         List<Team> teamList = new ArrayList<>();
-        for(Member member : targetUser.getMembers()) {
-            Optional<Team> team = teamRepository.findByMembersIn(member);
-            team.ifPresent(teamList::add);
+        for (Member member : targetUser.getMembers()) {
+            teamList.add(member.getTeam());
         }
 
         return teamList.stream().map(Team::toDto).toList();
