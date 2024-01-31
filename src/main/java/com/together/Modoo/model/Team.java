@@ -1,7 +1,7 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestTeam;
-import com.together.Modoo.dto.response.ResponseTeam;
+import com.together.Modoo.dto.request.team.RequestTeam;
+import com.together.Modoo.dto.response.team.ResponseTeam;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,7 +31,7 @@ public class Team {
     private List<Project> projects = new ArrayList<>();
 
     public Team(RequestTeam requestTeam) {
-        this.title = requestTeam.getTitle();
+        this.title = requestTeam.title();
     }
 
     public ResponseTeam toDto() {

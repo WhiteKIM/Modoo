@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestUser;
-import com.together.Modoo.dto.response.ResponseUser;
+import com.together.Modoo.dto.request.user.RequestUser;
+import com.together.Modoo.dto.response.user.ResponseUser;
 import com.together.Modoo.model.User;
 import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class UserService {
 
     public void update(User user) {
         Optional<User> optionalUser = userRepository.findById(user.getId());
-        if(optionalUser.isEmpty())
+        if (optionalUser.isEmpty())
             throw new RuntimeException();
 
         User user1 = optionalUser.get();

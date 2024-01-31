@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestReply;
-import com.together.Modoo.dto.response.ResponseReply;
+import com.together.Modoo.dto.request.reply.RequestReply;
+import com.together.Modoo.dto.response.reply.ResponseReply;
 import com.together.Modoo.model.Reply;
 import com.together.Modoo.model.User;
 import com.together.Modoo.repository.ReplyRepository;
@@ -21,7 +21,7 @@ public class ReplyService {
     private final UserRepository userRepository;
 
     public void save(RequestReply reply) {
-        if(reply.getParentId() == null) {
+        if (reply.parentId() == null) {
             saveRootReply(reply);
         } else {
             saveChildReply(reply);
@@ -40,7 +40,7 @@ public class ReplyService {
 
     public void update(Reply reply) {
         Optional<Reply> optionalReply = replyRepository.findById(reply.getId());
-        if(optionalReply.isEmpty())
+        if (optionalReply.isEmpty())
             throw new RuntimeException();
 
         Reply reply1 = optionalReply.get();
@@ -52,15 +52,15 @@ public class ReplyService {
     }
 
     private void saveRootReply(RequestReply requestReply) {
-        User user = userRepository.findById(requestReply.getUserId()).orElseThrow(RuntimeException::new);
+        User user = userRepository.findById(requestReply.userId()).orElseThrow(RuntimeException::new);
         Reply reply = new Reply(requestReply);
         reply.setUser(user);
         replyRepository.save(reply);
     }
 
     private void saveChildReply(RequestReply requestReply) {
-        User user = userRepository.findById(requestReply.getUserId()).orElseThrow(RuntimeException::new);
-        Reply parent = replyRepository.findById(requestReply.getParentId()).orElseThrow(RuntimeException::new);
+        User user = userRepository.findById(requestReply.userId()).orElseThrow(RuntimeException::new);
+        Reply parent = replyRepository.findById(requestReply.parentId()).orElseThrow(RuntimeException::new);
         Reply reply = new Reply(requestReply);
         reply.setUser(user);
         reply.setParent(parent);

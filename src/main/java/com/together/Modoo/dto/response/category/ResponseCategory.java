@@ -1,4 +1,4 @@
-package com.together.Modoo.dto.response;
+package com.together.Modoo.dto.response.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

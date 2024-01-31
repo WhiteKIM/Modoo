@@ -1,7 +1,7 @@
 package com.together.Modoo.controller;
 
-import com.together.Modoo.dto.request.RequestCategory;
-import com.together.Modoo.dto.response.ResponseCategory;
+import com.together.Modoo.dto.request.category.RequestCategory;
+import com.together.Modoo.dto.response.category.ResponseCategory;
 import com.together.Modoo.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.together.Modoo.controller;
 
-import com.together.Modoo.dto.request.RequestProject;
-import com.together.Modoo.dto.response.ResponseProject;
+import com.together.Modoo.dto.request.project.RequestProject;
+import com.together.Modoo.dto.response.project.ResponseProject;
 import com.together.Modoo.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

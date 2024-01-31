@@ -1,7 +1,7 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestProject;
-import com.together.Modoo.dto.response.ResponseProject;
+import com.together.Modoo.dto.request.project.RequestProject;
+import com.together.Modoo.dto.response.project.ResponseProject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class Project {
     private Team team;
 
     public Project(RequestProject requestProject) {
-        this.title = requestProject.getTitle();
+        this.title = requestProject.title();
         this.skills = getSkills();
     }
 

@@ -1,10 +1,13 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestBoard;
-import com.together.Modoo.dto.response.ResponseBoard;
+import com.together.Modoo.dto.request.board.RequestBoard;
+import com.together.Modoo.dto.response.board.ResponseBoard;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +30,8 @@ public class Board extends BaseTime {
     private User user;
 
     public Board(RequestBoard requestBoard) {
-        this.title = requestBoard.getTitle();
-        this.content = requestBoard.getContent();
+        this.title = requestBoard.title();
+        this.content = requestBoard.content();
     }
 
     public ResponseBoard toDto() {

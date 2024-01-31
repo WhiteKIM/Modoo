@@ -1,7 +1,7 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestReply;
-import com.together.Modoo.dto.response.ResponseReply;
+import com.together.Modoo.dto.request.reply.RequestReply;
+import com.together.Modoo.dto.response.reply.ResponseReply;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,7 @@ public class Reply extends BaseTime {
     private Integer level = 0;
 
     public Reply(RequestReply requestReply) {
-        this.message = requestReply.getMessage();
+        this.message = requestReply.message();
     }
 
     public ResponseReply toDto() {

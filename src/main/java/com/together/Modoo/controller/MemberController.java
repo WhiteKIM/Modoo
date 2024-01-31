@@ -1,7 +1,7 @@
 package com.together.Modoo.controller;
 
-import com.together.Modoo.dto.request.RequestMember;
-import com.together.Modoo.dto.response.ResponseMember;
+import com.together.Modoo.dto.request.member.RequestMember;
+import com.together.Modoo.dto.response.member.ResponseMember;
 import com.together.Modoo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class MemberController {
         memberService.save(requestMember);
         return ResponseEntity.ok("등록 완료");
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMember(Long id) {
         memberService.delete(id);

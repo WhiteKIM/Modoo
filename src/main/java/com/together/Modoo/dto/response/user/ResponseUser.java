@@ -1,5 +1,8 @@
-package com.together.Modoo.dto.response;
+package com.together.Modoo.dto.response.user;
 
+import com.together.Modoo.dto.response.board.ResponseBoard;
+import com.together.Modoo.dto.response.member.ResponseMember;
+import com.together.Modoo.dto.response.reply.ResponseReply;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

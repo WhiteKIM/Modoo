@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestMember;
-import com.together.Modoo.dto.response.ResponseMember;
+import com.together.Modoo.dto.request.member.RequestMember;
+import com.together.Modoo.dto.response.member.ResponseMember;
 import com.together.Modoo.model.Member;
 import com.together.Modoo.model.Team;
 import com.together.Modoo.model.User;
@@ -24,8 +24,8 @@ public class MemberService {
     private final UserRepository userRepository;
 
     public void save(RequestMember member) {
-        User registerUser = userRepository.findById(member.getUserId()).orElseThrow();
-        Team registerTeam = teamRepository.findById(member.getTeamId()).orElseThrow();
+        User registerUser = userRepository.findById(member.userId()).orElseThrow();
+        Team registerTeam = teamRepository.findById(member.teamId()).orElseThrow();
         memberRepository.save(Member.builder().user(registerUser).team(registerTeam).build());
     }
 
@@ -35,14 +35,14 @@ public class MemberService {
 
     public void update(Member member) {
         Optional<Member> optionalMember = memberRepository.findById(member.getId());
-        if(optionalMember.isEmpty())
+        if (optionalMember.isEmpty())
             throw new RuntimeException();
 
         Member member1 = optionalMember.get();
         member1.update(member);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         return;
     }
 

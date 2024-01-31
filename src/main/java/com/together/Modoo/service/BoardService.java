@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestBoard;
-import com.together.Modoo.dto.response.ResponseBoard;
+import com.together.Modoo.dto.request.board.RequestBoard;
+import com.together.Modoo.dto.response.board.ResponseBoard;
 import com.together.Modoo.model.Board;
 import com.together.Modoo.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class BoardService {
 
     public void update(Long id, RequestBoard board) {
         Optional<Board> boardOptional = boardRepository.findById(id);
-        if(boardOptional.isEmpty())
+        if (boardOptional.isEmpty())
             throw new RuntimeException();
 
         Board board1 = boardOptional.get();

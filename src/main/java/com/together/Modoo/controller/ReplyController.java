@@ -1,7 +1,7 @@
 package com.together.Modoo.controller;
 
-import com.together.Modoo.dto.request.RequestReply;
-import com.together.Modoo.dto.response.ResponseReply;
+import com.together.Modoo.dto.request.reply.RequestReply;
+import com.together.Modoo.dto.response.reply.ResponseReply;
 import com.together.Modoo.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

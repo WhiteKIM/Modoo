@@ -1,7 +1,7 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestUser;
-import com.together.Modoo.dto.response.ResponseUser;
+import com.together.Modoo.dto.request.user.RequestUser;
+import com.together.Modoo.dto.response.user.ResponseUser;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,10 +35,10 @@ public class User extends BaseTime {
     private List<Reply> replies = new ArrayList<>();
 
     public User(RequestUser requestUser) {
-        this.username = requestUser.getUsername();
-        this.password = requestUser.getPassword();
-        this.nickname = requestUser.getNickname();
-        this.email = requestUser.getEmail();
+        this.username = requestUser.username();
+        this.password = requestUser.password();
+        this.nickname = requestUser.nickname();
+        this.email = requestUser.email();
     }
 
     public ResponseUser toDto() {

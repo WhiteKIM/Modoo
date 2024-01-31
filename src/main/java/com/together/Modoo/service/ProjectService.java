@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestProject;
-import com.together.Modoo.dto.response.ResponseProject;
+import com.together.Modoo.dto.request.project.RequestProject;
+import com.together.Modoo.dto.response.project.ResponseProject;
 import com.together.Modoo.model.Category;
 import com.together.Modoo.model.Project;
 import com.together.Modoo.repository.CategoryRepository;
@@ -25,9 +25,9 @@ public class ProjectService {
 
     public void save(RequestProject project) {
         Project createProject = new Project(project);
-        createProject.setTeam(teamRepository.findById(project.getTeamId()).orElseThrow());
+        createProject.setTeam(teamRepository.findById(project.teamId()).orElseThrow());
         List<Category> categories = new ArrayList<>();
-        for (Long categoryId : project.getCategoriesId()) {
+        for (Long categoryId : project.categoriesId()) {
             Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
             optionalCategory.ifPresent(categories::add);
         }
@@ -41,7 +41,7 @@ public class ProjectService {
 
     public void update(Long id, RequestProject project) {
         Optional<Project> optionalProject = projectRepository.findById(id);
-        if(optionalProject.isEmpty())
+        if (optionalProject.isEmpty())
             throw new RuntimeException();
 
         Project project1 = optionalProject.get();

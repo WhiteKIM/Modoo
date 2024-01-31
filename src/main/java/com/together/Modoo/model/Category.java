@@ -1,8 +1,7 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.request.RequestBoard;
-import com.together.Modoo.dto.request.RequestCategory;
-import com.together.Modoo.dto.response.ResponseCategory;
+import com.together.Modoo.dto.request.category.RequestCategory;
+import com.together.Modoo.dto.response.category.ResponseCategory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -23,7 +22,7 @@ public class Category {
     private String title;
 
     public Category(RequestCategory requestCategory) {
-        this.title = requestCategory.getTitle();
+        this.title = requestCategory.title();
     }
 
     public ResponseCategory toDto() {

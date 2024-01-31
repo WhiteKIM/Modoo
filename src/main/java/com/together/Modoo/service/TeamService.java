@@ -1,7 +1,7 @@
 package com.together.Modoo.service;
 
-import com.together.Modoo.dto.request.RequestTeam;
-import com.together.Modoo.dto.response.ResponseTeam;
+import com.together.Modoo.dto.request.team.RequestTeam;
+import com.together.Modoo.dto.response.team.ResponseTeam;
 import com.together.Modoo.model.Member;
 import com.together.Modoo.model.Team;
 import com.together.Modoo.model.User;

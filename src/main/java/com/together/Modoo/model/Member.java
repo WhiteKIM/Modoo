@@ -1,6 +1,6 @@
 package com.together.Modoo.model;
 
-import com.together.Modoo.dto.response.ResponseMember;
+import com.together.Modoo.dto.response.member.ResponseMember;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
