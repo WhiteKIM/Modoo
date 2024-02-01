@@ -21,18 +21,18 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseBoard> getBoard(Long id) {
+    public ResponseEntity<ResponseBoard> getBoard(@PathVariable Long id) {
         return ResponseEntity.ok(boardService.getBoard(id));
     }
 
     @PostMapping("/write")
-    public ResponseEntity<String> write(RequestBoard board) {
+    public ResponseEntity<String> write(@RequestBody RequestBoard board) {
         boardService.save(board);
         return ResponseEntity.ok("작성 완료");
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, RequestBoard updateBoard) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody RequestBoard updateBoard) {
         boardService.update(id, updateBoard);
         return ResponseEntity.ok("수정 완료");
     }

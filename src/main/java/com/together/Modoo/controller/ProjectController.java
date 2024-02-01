@@ -26,13 +26,13 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProject(RequestProject requestProject) {
+    public ResponseEntity<String> createProject(@RequestBody RequestProject requestProject) {
         projectService.save(requestProject);
         return ResponseEntity.ok("생성 완료");
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateProject(@PathVariable Long id, RequestProject requestProject) {
+    public ResponseEntity<String> updateProject(@PathVariable Long id, @RequestBody RequestProject requestProject) {
         projectService.update(id, requestProject);
         return ResponseEntity.ok("수정 완료");
     }

@@ -26,13 +26,13 @@ public class TeamController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createTeam(RequestTeam requestTeam) {
+    public ResponseEntity<String> createTeam(@RequestBody RequestTeam requestTeam) {
         teamService.save(requestTeam);
         return ResponseEntity.ok("팀 생성 성공");
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateTeam(@PathVariable Long id, RequestTeam requestTeam) {
+    public ResponseEntity<String> updateTeam(@PathVariable Long id, @RequestBody RequestTeam requestTeam) {
         teamService.update(id, requestTeam);
         return ResponseEntity.ok("수정 완료");
     }

@@ -27,7 +27,7 @@ public class ReplyController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<String> writeReply(RequestReply requestReply) {
+    public ResponseEntity<String> writeReply(@RequestBody RequestReply requestReply) {
         replyService.save(requestReply);
         return ResponseEntity.ok("작성 완료");
     }

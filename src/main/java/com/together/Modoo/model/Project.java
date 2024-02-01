@@ -33,7 +33,7 @@ public class Project {
 
     public Project(RequestProject requestProject) {
         this.title = requestProject.title();
-        this.skills = getSkills();
+        this.skills = requestProject.skills();
     }
 
     public void setTeam(Team team) {

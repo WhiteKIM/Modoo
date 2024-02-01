@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(RequestUser requestUser) {
+    public ResponseEntity<String> join(@RequestBody RequestUser requestUser) {
         userService.save(requestUser);
         return ResponseEntity.ok("회원가입 완료");
     }

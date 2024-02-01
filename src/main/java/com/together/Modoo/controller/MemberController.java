@@ -21,7 +21,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerTeam(RequestMember requestMember) {
+    public ResponseEntity<String> registerTeam(@RequestBody RequestMember requestMember) {
         memberService.save(requestMember);
         return ResponseEntity.ok("등록 완료");
     }
