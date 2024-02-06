@@ -1,13 +1,11 @@
 package com.together.Modoo.model;
 
+import com.together.Modoo.dto.request.user.RequestJoinUser;
 import com.together.Modoo.dto.request.user.RequestUser;
 import com.together.Modoo.dto.response.user.ResponseUser;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +21,7 @@ public class User extends BaseTime {
     @GeneratedValue
     private Long id;
     private String username;
+    @Setter
     private String password;
     private String nickname;
     private String email;
@@ -33,8 +32,18 @@ public class User extends BaseTime {
     private List<Board> boards = new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private List<Reply> replies = new ArrayList<>();
+    private String role = "ROLE_USER";
 
+
+    // 나중에 지우셈
     public User(RequestUser requestUser) {
+        this.username = requestUser.username();
+        this.password = requestUser.password();
+        this.nickname = requestUser.nickname();
+        this.email = requestUser.email();
+    }
+
+    public User(RequestJoinUser requestUser) {
         this.username = requestUser.username();
         this.password = requestUser.password();
         this.nickname = requestUser.nickname();

@@ -21,7 +21,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
         log.info("token : {}", token);
 
         if (token != null && tokenProvider.validateToken(token)) {
-            log.error("로그인 시도.");
+            log.info("로그인 시도.");
             SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(token));
         }
 
