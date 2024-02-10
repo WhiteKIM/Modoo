@@ -1,5 +1,6 @@
 package com.together.Modoo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.together.Modoo.dto.request.user.RequestJoinUser;
 import com.together.Modoo.dto.request.user.RequestUser;
 import com.together.Modoo.dto.response.user.ResponseUser;
@@ -27,10 +28,10 @@ public class User extends BaseTime {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    private List<Member> members = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Board> boards = new ArrayList<>();
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Reply> replies = new ArrayList<>();
     private String role = "ROLE_USER";
 
@@ -57,7 +58,6 @@ public class User extends BaseTime {
                 .password(password)
                 .nickname(nickname)
                 .email(email)
-                .members(members.stream().map(Member::toDto).toList())
                 .boards(boards.stream().map(Board::toDto).toList())
                 .replies(replies.stream().map(Reply::toDto).toList())
                 .build();

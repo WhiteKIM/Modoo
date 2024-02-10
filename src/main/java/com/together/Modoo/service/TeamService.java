@@ -48,9 +48,11 @@ public class TeamService {
 
     public List<ResponseTeam> findTeamByUser(Long id) {
         User targetUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+        List<Member> memberList = memberRepository.findAll();
         List<Team> teamList = new ArrayList<>();
-        for (Member member : targetUser.getMembers()) {
-            teamList.add(member.getTeam());
+        for (Member member : memberList) {
+            if (targetUser.equals(member.getUser()))
+                teamList.add(member.getTeam());
         }
 
         return teamList.stream().map(Team::toDto).toList();

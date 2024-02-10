@@ -1,11 +1,9 @@
 package com.together.Modoo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.together.Modoo.dto.request.team.RequestTeam;
 import com.together.Modoo.dto.response.team.ResponseTeam;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,9 +23,12 @@ public class Team {
     private Long id;
     private String title;
 
-    @OneToMany
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Member> members = new ArrayList<>();
-    @OneToMany
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Project> projects = new ArrayList<>();
 
     public Team(RequestTeam requestTeam) {

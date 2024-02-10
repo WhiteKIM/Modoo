@@ -1,6 +1,5 @@
 package com.together.Modoo.dto.response.member;
 
-import com.together.Modoo.dto.response.team.ResponseTeam;
 import com.together.Modoo.dto.response.user.ResponseUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class ResponseMember {
     private Long id;
     private ResponseUser user;
-    private ResponseTeam team;
+    private String team;
 }
