@@ -2,8 +2,11 @@ package com.together.Modoo.service;
 
 import com.together.Modoo.dto.request.board.RequestBoard;
 import com.together.Modoo.dto.response.board.ResponseBoard;
+import com.together.Modoo.exception.NotExistUser;
 import com.together.Modoo.model.Board;
+import com.together.Modoo.model.User;
 import com.together.Modoo.repository.BoardRepository;
+import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +19,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     public List<ResponseBoard> getAll() {
         return boardRepository.findAll().stream().map(Board::toDto).toList();
     }
 
     public void save(RequestBoard board) {
-        boardRepository.save(new Board(board));
+        User user = userRepository.findById(board.userId()).orElseThrow(NotExistUser::new);
+        Board saveBoard = boardRepository.save(new Board(board));
+        saveBoard.setUser(user);
     }
 
     public ResponseBoard getBoard(Long id) {

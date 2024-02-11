@@ -4,10 +4,7 @@ import com.together.Modoo.dto.request.board.RequestBoard;
 import com.together.Modoo.dto.response.board.ResponseBoard;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,8 @@ public class Board extends BaseTime {
 
     @OneToMany
     private List<Reply> replies = new ArrayList<>();
-    @ManyToOne
+    @Setter
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public Board(RequestBoard requestBoard) {
@@ -35,13 +33,17 @@ public class Board extends BaseTime {
     }
 
     public ResponseBoard toDto() {
-        ResponseBoard responseBoard = ResponseBoard.builder()
+        return ResponseBoard.builder()
                 .id(id)
                 .content(content)
                 .title(title)
+                .user(user.getUsername())
+                .replies(replies.stream().map(Reply::toDto).toList())
                 .build();
+    }
 
-        return responseBoard;
+    public void addReply(Reply reply) {
+        replies.add(reply);
     }
 
     public void update(RequestBoard board) {

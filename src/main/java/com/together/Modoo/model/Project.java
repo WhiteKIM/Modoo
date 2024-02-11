@@ -26,6 +26,7 @@ public class Project {
     private List<String> skills = new ArrayList<>();
 
     @OneToMany
+    @JoinColumn(name = "category_id")
     private List<Category> categories = new ArrayList<>();
 
     @ManyToOne

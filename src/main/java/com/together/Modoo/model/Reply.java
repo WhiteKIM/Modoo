@@ -1,13 +1,11 @@
 package com.together.Modoo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.together.Modoo.dto.request.reply.RequestReply;
 import com.together.Modoo.dto.response.reply.ResponseReply;
 import com.together.Modoo.global.BaseTime;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +22,22 @@ public class Reply extends BaseTime {
     private Long id;
     private String message;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Setter
     private Board board;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Setter
     private User user;
 
-    @OneToMany(mappedBy = "parent")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Reply parent;
+
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Reply> replyList = new ArrayList<>();
-    @ManyToOne
-    private Reply parent = this;
+
     private Integer level = 0;
 
     public Reply(RequestReply requestReply) {
@@ -40,23 +45,46 @@ public class Reply extends BaseTime {
     }
 
     public ResponseReply toDto() {
+        List<ResponseReply> replies = childReplyDto();
         return ResponseReply.builder()
                 .id(id)
                 .message(message)
-                .board(board.toDto())
-                .user(user.toDto())
+                .board(board.getTitle())
                 .level(level)
+                .replies(replies)
                 .build();
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public void setParent(Reply reply) {
         this.parent = reply;
+        this.level = reply.getLevel() + 1;
     }
 
     public void update(Reply reply) {
+    }
+
+    private List<ResponseReply> childReplyDto() {
+        List<ResponseReply> replies = new ArrayList<>();
+        if (!replyList.isEmpty()) {
+            for (Reply reply : replyList) {
+                ResponseReply dto = reply.toDto();
+                replies.add(dto);
+            }
+        }
+
+        return replies;
+    }
+
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", board=" + board +
+                ", user=" + user +
+                ", parent=" + parent +
+                ", replyList=" + replyList +
+                ", level=" + level +
+                '}';
     }
 }

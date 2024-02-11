@@ -1,7 +1,5 @@
 package com.together.Modoo.dto.response.reply;
 
-import com.together.Modoo.dto.response.board.ResponseBoard;
-import com.together.Modoo.dto.response.user.ResponseUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +14,7 @@ import java.util.List;
 public class ResponseReply {
     private Long id;
     private String message;
-    private ResponseBoard board;
-    private ResponseUser user;
+    private String board;
     private List<ResponseReply> replies;
     private ResponseReply parent;
     private Integer level;

@@ -2,8 +2,13 @@ package com.together.Modoo.service;
 
 import com.together.Modoo.dto.request.reply.RequestReply;
 import com.together.Modoo.dto.response.reply.ResponseReply;
+import com.together.Modoo.exception.NotExistBoard;
+import com.together.Modoo.exception.NotExistParentReply;
+import com.together.Modoo.exception.NotExistUser;
+import com.together.Modoo.model.Board;
 import com.together.Modoo.model.Reply;
 import com.together.Modoo.model.User;
+import com.together.Modoo.repository.BoardRepository;
 import com.together.Modoo.repository.ReplyRepository;
 import com.together.Modoo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReplyService {
     private final ReplyRepository replyRepository;
+    private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
     public void save(RequestReply reply) {
@@ -52,18 +58,29 @@ public class ReplyService {
     }
 
     private void saveRootReply(RequestReply requestReply) {
-        User user = userRepository.findById(requestReply.userId()).orElseThrow(RuntimeException::new);
+        User user = userRepository.findById(requestReply.userId()).orElseThrow(NotExistUser::new);
+        Board board = boardRepository.findById(requestReply.boardId()).orElseThrow(NotExistBoard::new);
         Reply reply = new Reply(requestReply);
         reply.setUser(user);
-        replyRepository.save(reply);
+        reply.setBoard(board);
+        Reply saveReply = replyRepository.save(reply);
+        board.addReply(saveReply);
     }
 
     private void saveChildReply(RequestReply requestReply) {
-        User user = userRepository.findById(requestReply.userId()).orElseThrow(RuntimeException::new);
-        Reply parent = replyRepository.findById(requestReply.parentId()).orElseThrow(RuntimeException::new);
+        User user = userRepository.findById(requestReply.userId()).orElseThrow(NotExistUser::new);
+        Reply parent = replyRepository.findById(requestReply.parentId()).orElseThrow(NotExistParentReply::new);
+        Board board = boardRepository.findById(requestReply.boardId()).orElseThrow(NotExistBoard::new);
+
         Reply reply = new Reply(requestReply);
         reply.setUser(user);
         reply.setParent(parent);
-        parent.getReplyList().add(replyRepository.save(reply));
+        reply.setBoard(board);
+
+        System.out.println(reply.toString());
+
+        Reply saveReply = replyRepository.save(reply);
+        parent.getReplyList().add(saveReply);
+        board.addReply(saveReply);
     }
 }
