@@ -74,17 +74,4 @@ public class Reply extends BaseTime {
 
         return replies;
     }
-
-    @Override
-    public String toString() {
-        return "Reply{" +
-                "id=" + id +
-                ", message='" + message + '\'' +
-                ", board=" + board +
-                ", user=" + user +
-                ", parent=" + parent +
-                ", replyList=" + replyList +
-                ", level=" + level +
-                '}';
-    }
 }

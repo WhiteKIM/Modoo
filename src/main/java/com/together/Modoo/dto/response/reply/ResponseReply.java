@@ -16,6 +16,5 @@ public class ResponseReply {
     private String message;
     private String board;
     private List<ResponseReply> replies;
-    private ResponseReply parent;
     private Integer level;
 }

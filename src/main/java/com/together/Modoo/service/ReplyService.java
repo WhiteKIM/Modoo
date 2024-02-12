@@ -77,10 +77,12 @@ public class ReplyService {
         reply.setParent(parent);
         reply.setBoard(board);
 
-        System.out.println(reply.toString());
-
         Reply saveReply = replyRepository.save(reply);
         parent.getReplyList().add(saveReply);
         board.addReply(saveReply);
+
+        Reply isReply = saveReply.getParent();
+        if (isReply != null)
+            System.out.println("not null");
     }
 }
