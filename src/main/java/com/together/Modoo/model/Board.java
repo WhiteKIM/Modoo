@@ -21,8 +21,9 @@ public class Board extends BaseTime {
     private String title;
     private String content;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
+
     @Setter
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;

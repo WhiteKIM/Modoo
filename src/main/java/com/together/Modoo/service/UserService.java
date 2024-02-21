@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
@@ -45,12 +46,12 @@ public class UserService {
 
     public void login(RequestLoginUser loginUser, HttpServletRequest request, HttpServletResponse response) {
         Optional<User> optionalUser = userRepository.findByUsername(loginUser.username());
-        if(optionalUser.isEmpty())
+        if (optionalUser.isEmpty())
             throw new NotExistUser();
 
         User user = optionalUser.get();
 
-        if(!passwordEncoder.matches(loginUser.password(), user.getPassword()))
+        if (!passwordEncoder.matches(loginUser.password(), user.getPassword()))
             throw new WrongUserPassword();
 
         String token = jwtTokenProvider.createToken(user.getUsername());
@@ -72,6 +73,12 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        return;
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isEmpty())
+            throw new NotExistUser();
+
+        User user = optionalUser.get();
+        user.setDeleteTime(ZonedDateTime.now());//현재 시간으로 제거되었음을 알린다.
     }
 }

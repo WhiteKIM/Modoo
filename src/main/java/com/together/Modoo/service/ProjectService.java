@@ -49,7 +49,7 @@ public class ProjectService {
     }
 
     public void delete(Long id) {
-        return;
+        projectRepository.deleteById(id);
     }
 
     public List<ResponseProject> getAllTeamProject(Long teamId) {

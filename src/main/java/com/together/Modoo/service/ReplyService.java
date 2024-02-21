@@ -4,6 +4,7 @@ import com.together.Modoo.dto.request.reply.RequestReply;
 import com.together.Modoo.dto.response.reply.ResponseReply;
 import com.together.Modoo.exception.NotExistBoard;
 import com.together.Modoo.exception.NotExistParentReply;
+import com.together.Modoo.exception.NotExistReply;
 import com.together.Modoo.exception.NotExistUser;
 import com.together.Modoo.model.Board;
 import com.together.Modoo.model.Reply;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +56,13 @@ public class ReplyService {
     }
 
     public void delete(Long id) {
-        replyRepository.deleteById(id);
+        Optional<Reply> optionalReply = replyRepository.findById(id);
+
+        if (optionalReply.isEmpty())
+            throw new NotExistReply();
+
+        Reply reply = optionalReply.get();
+        reply.setDeleteTime(ZonedDateTime.now());
     }
 
     private void saveRootReply(RequestReply requestReply) {

@@ -29,7 +29,7 @@ public class Project {
     @JoinColumn(name = "category_id")
     private List<Category> categories = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Team team;
 
     public Project(RequestProject requestProject) {

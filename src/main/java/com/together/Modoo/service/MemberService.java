@@ -43,7 +43,7 @@ public class MemberService {
     }
 
     public void delete(Long id) {
-        return;
+        memberRepository.deleteById(id);
     }
 
     public List<ResponseMember> findAllByTeamId(Long teamId) {

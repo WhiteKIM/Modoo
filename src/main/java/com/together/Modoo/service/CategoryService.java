@@ -34,8 +34,9 @@ public class CategoryService {
         category1.update(category);
     }
 
+    // 실제로 지워도 무방한 데이터
     public void delete(Long id) {
-        return;
+        categoryRepository.deleteById(id);
     }
 
     public List<ResponseCategory> getAll() {

@@ -1,7 +1,6 @@
 package com.together.Modoo.dto.response.project;
 
 import com.together.Modoo.dto.response.category.ResponseCategory;
-import com.together.Modoo.dto.response.team.ResponseTeam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +17,4 @@ public class ResponseProject {
     private String title;
     private List<String> skills;
     private List<ResponseCategory> categories;
-    private ResponseTeam team;
 }

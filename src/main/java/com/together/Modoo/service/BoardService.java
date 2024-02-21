@@ -2,6 +2,7 @@ package com.together.Modoo.service;
 
 import com.together.Modoo.dto.request.board.RequestBoard;
 import com.together.Modoo.dto.response.board.ResponseBoard;
+import com.together.Modoo.exception.NotExistBoard;
 import com.together.Modoo.exception.NotExistUser;
 import com.together.Modoo.model.Board;
 import com.together.Modoo.model.User;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +48,12 @@ public class BoardService {
     }
 
     public void deleteBoard(Long id) {
-        return;
+        Optional<Board> optionalBoard = boardRepository.findById(id);
+
+        if (optionalBoard.isEmpty())
+            throw new NotExistBoard();
+
+        Board board = optionalBoard.get();
+        board.setDeleteTime(ZonedDateTime.now());
     }
 }

@@ -22,11 +22,11 @@ public class Reply extends BaseTime {
     private Long id;
     private String message;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Setter
     private Board board;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Setter
     private User user;
 
@@ -34,7 +34,7 @@ public class Reply extends BaseTime {
     @JsonIgnore
     private Reply parent;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Reply> replyList = new ArrayList<>();
 
