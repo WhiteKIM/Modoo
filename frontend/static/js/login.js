@@ -1,4 +1,5 @@
 function login() {
+  localStorage.clear();
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const data = {
