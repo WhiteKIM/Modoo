@@ -1,23 +1,3 @@
-function getBoard() {
-  fetch('http://127.0.0.1:8080/api/board', {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-AUTH-TOKEN': localStorage.getItem('authToken'),
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log(response.data);
-      } else {
-        // 에러 처리
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
-
 function writeBoard() {
   const title = document.getElementById('title').value;
   const content = document.getElementById('content').value;
