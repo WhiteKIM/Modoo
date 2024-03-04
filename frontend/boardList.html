@@ -4,45 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>게시글 리스트</title>
+    <script src="/static/js/board.js"></script>
   </head>
   <body>
     <div id="boardList"></div>
   </body>
   <script>
     window.onload = function () {
-      fetch('http://127.0.0.1:8080/api/board', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-AUTH-TOKEN': localStorage.getItem('authToken'),
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          let parent = document.getElementById('boardList');
-          for (var i = 0; i < data.length; i++) {
-            chileDivElement = document.createElement('div');
-            childTitleElement = document.createElement('h2');
-            childContent = document.createElement('p');
-
-            childTitleElement.innerText = data[i].title;
-            childContent.innerText = data[i].content;
-            chileDivElement.addEventListener('click', function () {
-              location.href = 'board.html';
-            });
-            chileDivElement.append(childTitleElement);
-            chileDivElement.append(childContent);
-            parent.append(chileDivElement);
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+      getBoardList();
     };
   </script>
 </html>

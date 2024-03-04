@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시글</title>
+    <script src="/static/js/board.js"></script>
+  </head>
+  <body>
+    <h2 id="title"></h2>
+    <textarea id="content" readonly></textarea>
+    <div>
+      <table id="replyList">
+        <tr>
+          <th>작성자</th>
+          <th>내용</th>
+        </tr>
+      </table>
+      <div id="replyWrite">
+        <label for="replyForm">댓글 작성</label>
+        <textarea id="replyForm"></textarea>
+        <button id="reply-submit">작성</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      getBoardDetail();
+    };
+  </script>
+</html>
