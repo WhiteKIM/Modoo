@@ -1,3 +1,6 @@
+var queryString = new URLSearchParams(window.location.search);
+var id = queryString.get('id');
+
 function writeBoard() {
   const title = document.getElementById('title').value;
   const content = document.getElementById('content').value;
@@ -30,6 +33,15 @@ function writeBoard() {
 }
 
 function writeReply() {
+  const message = document.getElementById('replyMessage').value;
+
+  const data = {
+    message: message,
+    boardId: id,
+    userId: 1,
+    parent: null,
+  };
+
   fetch('http://127.0.0.1:8080/api/reply/write', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -40,14 +52,13 @@ function writeReply() {
   })
     .then((response) => {
       if (response.ok) {
-        window.location.href = 'main.html';
+        window.location = 'main.html';
       } else {
         // 에러 처리
       }
     })
     .catch((error) => {
       window.location = 'login.html';
-
       console.error('Error:', error);
     });
 }
@@ -89,8 +100,6 @@ function getBoardList() {
 }
 
 function getBoardDetail() {
-  var queryString = new URLSearchParams(window.location.search);
-  var id = queryString.get('id');
   console.log(id);
   fetch('http://127.0.0.1:8080/api/board/' + id, {
     method: 'GET',
@@ -115,7 +124,6 @@ function getBoardDetail() {
       setReplyData(data.replies);
     })
     .catch((error) => {
-      localStorage.clear();
       console.error('Error:', error);
     });
 }
@@ -126,13 +134,13 @@ function setReplyData(replyList) {
     let tr = document.createElement('tr');
     let td_content = document.createElement('td');
     let td_child_reply = replyList.replies;
-    td_writer.innerText = replyList[i].message;
+    td_content.innerText = replyList[i].message;
     tr.appendChild(td_content);
-    for (var j = 0; j < td_child_reply.length; j++) {
-      let td_child_reply_content = document.createElement('td');
-      td_child_reply_content.innerText = td_child_reply[i].message;
-      tr.appendChild(td_child_reply_content);
-    }
+    // for (var j = 0; j < td_child_reply.length; j++) {
+    //   let td_child_reply_content = document.createElement('td');
+    //   td_child_reply_content.innerText = td_child_reply[i].message;
+    //   tr.appendChild(td_child_reply_content);
+    // }
 
     parent.append(tr);
   }
