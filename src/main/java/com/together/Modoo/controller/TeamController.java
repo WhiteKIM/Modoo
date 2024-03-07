@@ -1,10 +1,12 @@
 package com.together.Modoo.controller;
 
+import com.together.Modoo.config.principal.PrincipalDetail;
 import com.together.Modoo.dto.request.team.RequestTeam;
 import com.together.Modoo.dto.response.team.ResponseTeam;
 import com.together.Modoo.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +17,9 @@ import java.util.List;
 public class TeamController {
     private final TeamService teamService;
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<ResponseTeam>> getUserAllTeam(@PathVariable Long id) {
-        return ResponseEntity.ok(teamService.findTeamByUser(id));
+    @GetMapping("/list")
+    public ResponseEntity<List<ResponseTeam>> getUserAllTeam(@AuthenticationPrincipal PrincipalDetail user) {
+        return ResponseEntity.ok(teamService.findTeamByUser(user));
     }
 
     @GetMapping("/{id}")

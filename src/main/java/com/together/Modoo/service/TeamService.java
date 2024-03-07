@@ -1,5 +1,6 @@
 package com.together.Modoo.service;
 
+import com.together.Modoo.config.principal.PrincipalDetail;
 import com.together.Modoo.dto.request.team.RequestTeam;
 import com.together.Modoo.dto.response.team.ResponseTeam;
 import com.together.Modoo.model.Member;
@@ -27,6 +28,16 @@ public class TeamService {
     public void save(RequestTeam requestTeam) {
         Team team = new Team(requestTeam);
         teamRepository.save(team);
+
+        for (Long id : requestTeam.membersId()) {
+            Member member = Member
+                    .builder()
+                    .user(userRepository.findById(id).orElseThrow())
+                    .team(team)
+                    .build();
+
+            memberRepository.save(member);
+        }
     }
 
     public ResponseTeam getTeam(Long id) {
@@ -46,8 +57,8 @@ public class TeamService {
         return;
     }
 
-    public List<ResponseTeam> findTeamByUser(Long id) {
-        User targetUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+    public List<ResponseTeam> findTeamByUser(PrincipalDetail user) {
+        User targetUser = userRepository.findById(user.getId()).orElseThrow(RuntimeException::new);
         List<Member> memberList = memberRepository.findAll();
         List<Team> teamList = new ArrayList<>();
         for (Member member : memberList) {

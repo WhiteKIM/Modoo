@@ -9,10 +9,16 @@
     <div class="create-team">
       <label for="title">팀명</label>
       <input id="title" />
-      <label for="membersId">팀원 추가</label>
-      <button onclick="{createTeam()}"></button>
+      <button onclick="{createTeam()}">팀 생성</button><br />
+      <label for="memberId">팀원 추가</label>
+      <input id="memberId" /><button id="member-submit">팀원 입력</button><br />
     </div>
-    <div class="team-list"></div>
+    <div id="team-list"></div>
   </body>
   <script src="/static/js/team.js"></script>
+  <script>
+    window.onload = function () {
+      getTeamList();
+    };
+  </script>
 </html>
